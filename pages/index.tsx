@@ -3,6 +3,8 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 import { Box, TextField } from "@mui/material";
 
+import Editor from "@monaco-editor/react";
+
 const Home: NextPage = () => {
   const [result, setResult] = useState("");
   const [input, setInput] = useState("");
@@ -47,17 +49,12 @@ const Home: NextPage = () => {
       flexDirection={"column"}
     >
       <Box display={"flex"} gap={1} height={"100%"} flex={1}>
-        <TextField
-          sx={{ flex: 1, ...theme }}
-          inputProps={{
-            autoCapitalize: "off",
-          }}
-          multiline={true}
-          autoCorrect={"off"}
-          autoComplete={"off"}
-          variant={"outlined"}
-          placeholder={"Write here..."}
-          onChange={(e) => setInput(e.target.value)}
+        <Editor
+          width="50%"
+          language="typescript"
+          theme="vs-dark"
+          value={input}
+          onChange={(newValue) => setInput(newValue ?? "")}
         />
         <TextField
           sx={{

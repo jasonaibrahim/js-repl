@@ -17,7 +17,7 @@ fn main() {
 fn eval(code: &str) -> Result<serde_json::Value, String> {
     let mut runtime = JsRuntime::new(RuntimeOptions::default());
 
-    let res = runtime.execute_script("<anon>", code);
+    let res = runtime.execute_script("<context>", code);
     match res {
         Ok(global) => {
             let scope = &mut runtime.handle_scope();

@@ -5,14 +5,43 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/700.css";
 
 import type { AppProps } from "next/app";
-import { ThemeProvider } from "@mui/material";
-import { theme } from "./_theme";
+import {
+  createTheme,
+  CssBaseline,
+  PaletteMode,
+  ThemeProvider,
+} from "@mui/material";
+import { getDesignTokens } from "./_theme";
+import { createContext, useMemo, useState } from "react";
+
+export const ColorModeContext = createContext({
+  colorMode: "",
+  toggleColorMode: () => {},
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [mode, setMode] = useState<PaletteMode>("light");
+  const colorMode = useMemo(
+    () => ({
+      colorMode: mode,
+      toggleColorMode: () => {
+        setMode((prevMode: PaletteMode) =>
+          prevMode === "light" ? "dark" : "light"
+        );
+      },
+    }),
+    [mode]
+  );
+
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 

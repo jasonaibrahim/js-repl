@@ -19,7 +19,7 @@ export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function JsRepl({ Component, pageProps }: AppProps) {
   const [mode, setMode] = useState<PaletteMode>("light");
   const colorMode = useMemo(
     () => ({
@@ -45,4 +45,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default JsRepl;
